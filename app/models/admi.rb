@@ -1,0 +1,3 @@
+class Admi < User
+  
+end
