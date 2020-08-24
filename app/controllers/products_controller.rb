@@ -1,15 +1,24 @@
 class ProductsController < ApplicationController
   
   def index 
-    render json: Product.all 
+    business = Business.find(params[:business_id])
+    @products = business.products
+    if @products
+      render json: @products
+    else
+      render json: @products.errors, status: :unprocessable_entity
+    end
   end
 
   def show
+    business = Business.find(params[:business_id])
+    @product = business.products
     render json: Product.find(params[:id])
   end
 
   def create
-    @product = Product.new(product_params)
+    business = Business.find(params[:business_id])
+    @product = business.products.new(product_params)
 
     if @product.save
       render json: @product, status: :created
@@ -19,7 +28,8 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product =Product.find(params[:id])
+    business = Business.find(params[:business_id])
+    @product =business.products.find(params[:id])
     if @product.update(product_params)
       render json: @product
     else
