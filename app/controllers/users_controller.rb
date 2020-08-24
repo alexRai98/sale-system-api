@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:create]
   def show
-    render json: current_user.to_json(only: [:id,:name, :user_name,:token ,:type])
+    render json: current_user.to_json(only: [:id,:name, :user_name,:token ,:type]), status: :ok
   end
 
   def create
